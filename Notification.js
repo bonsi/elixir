@@ -1,5 +1,22 @@
 var notify = require('gulp-notify');
 
+// Required for Growl.
+var nn = require('node-notifier');
+// Growl options. 
+// Either:
+//  - set the IP address of the remote Growl host 
+//  or 
+//  - let it default to 'localhost' and use SSH portforwarding (dev-machine:23053 -> 127.0.0.1:23053)
+var growlOptions = {
+    name: 'Laravel Growlixir', // Defaults as 'Node'
+    //host: '192.168.56.1',
+    port: 23053
+};
+// Growl as a custom reporter.
+var notify = gnotify.withReporter(function (options, callback) {
+    new nn.Growl(growlOptions).notify(options, callback);
+});
+
 /**
  * Create a new Notification instance.
  */
